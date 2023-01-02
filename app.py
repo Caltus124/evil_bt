@@ -52,8 +52,10 @@ def scan_mac_result():
     output = request.form.to_dict()
 
     target_url = output["target_mac"]
+    device_name = bluetooth.lookup_name(target_url)
     services = bluetooth.find_service(address=target_url)
     if services:
+        print(device_name)
         # Pour chaque service disponible, affichage de son nom et de son UUID
         for service in services:
             print(f'  Service: {service["name"]} [{service["protocol"]}]')

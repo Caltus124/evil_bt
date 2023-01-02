@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 style="color: white;">{% block title %} MAC SCAN {% endblock %}</h1>
+    <html> 
+     <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../static/main.css" />
+     </head>
+     
+     <body>
+
+        <form class="grid" action="/scan_mac/result" method="POST">
+          <input class="file_submit" type="text" placeholder="Enter a valid mac address !" id="target_mac" name="target_mac">
+          <input class="file_submit" type="Submit" value="Scan"><br><br>
+        </form>
+        {% if newdata %}
+          <h1 style="color: white;">{{newdata}}</h1>
+        {% endif %}
+
+     </body>
+</html>
+{% endblock %}

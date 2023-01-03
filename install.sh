@@ -20,6 +20,7 @@ else
                 echo "cd /opt/evil_bt && hciconfig hci0 up && python3 -m flask run " > /bin/evilbt
                 apt install python3-pip --fix-missing
                 pip install -r requirements.txt
+                apt install bluez --fix-missing
                 echo -e "${GREEN}Successful installation, thanks for choosing Evil_BT !${ENDCOLOR}"
                 rm -rf "/opt/evil_bt/install.sh"
         else

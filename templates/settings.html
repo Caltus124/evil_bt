@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 style="color: white;">{% block title %} SETTINGS {% endblock %}</h1>
+    <html> 
+     <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../static/main.css" />
+     </head>
+     
+     <body>
+
+        <dashboard class="dashboard">
+            <dashboard-header title="Datacenter">
+                <dashboard-clock digital="true" binary="true" />
+            </dashboard-header>
+            <server-list>
+                <server v-for="(server, index) in servers" :class="{ 'has-failed': !server.status }" :type="server.type" @click.native="updateServerStatus(index)">
+                    <span slot="name" class="data">CC</span>
+                    <span slot="status" class="data signal">CC</span>
+                    <span slot="adr" class="data">CC</span>
+                </server>
+            </server-list>
+        </dashboard>
+
+     </body>
+</html>
+{% endblock %}

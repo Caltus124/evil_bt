@@ -1,8 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Index {% endblock %}</h1>
-    <h1>Hello World!</h1>
-    <h2>Welcome to FlaskApp!</h2>
-    <h3>{{ utc_dt }}</h3>
+    <h1 style="color: white;">{% block title %} HOME {% endblock %}</h1>
+
+    <body>
+        <div class="wrap">
+          <div class="div">
+            <h2>Settings</h2>
+            <a href="/settings">
+              <div class="div_img">
+                <img src="{{ url_for('static', filename='parametres.png') }}" height="60%">
+                <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, ab corporis eos sit eveniet odit minus nemo magnam unde? Aut quis excepturi reiciendis vitae veritatis voluptate sit, est quam ut.</h3>
+              </div>
+            </a>
+          </div>
+          <div class="div">
+            <h2>Devices Scan</h2>
+            <a href="/scan">
+              <div class="div_img">
+                <img src="{{ url_for('static', filename='bluetooth.png') }}" height="60%">
+                <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, ab corporis eos sit eveniet odit minus nemo magnam unde? Aut quis excepturi reiciendis vitae veritatis voluptate sit, est quam ut.</h3>
+              </div>
+            </a>
+          </div>
+          <div class="div">
+            <h2>MAC Scan</h2>
+            <a href="/scan_mac">
+              <div class="div_img">
+                <img src="{{ url_for('static', filename='chipset.png') }}" height="60%">
+                <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, ab corporis eos sit eveniet odit minus nemo magnam unde? Aut quis excepturi reiciendis vitae veritatis voluptate sit, est quam ut.</h3>
+              </div>
+            </a>
+          </div>
+          <div class="div">
+            <h2>DDOS</h2>
+            <a href="/ddos">
+              <div class="div_img">
+                <img src="{{ url_for('static', filename='ddos.png') }}" height="60%">
+                <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, ab corporis eos sit eveniet odit minus nemo magnam unde? Aut quis excepturi reiciendis vitae veritatis voluptate sit, est quam ut.</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <style>  
+          .wrap {
+            display: flex;
+            flex-wrap: wrap;
+          }
+      
+          .wrap > div {
+            width: calc(80% / 2);
+            margin: 50px 50px;
+            background-color: #2e3047;
+            height: 300px;
+            border-radius: 10px;
+          }
+          h2{
+            color: white;
+            margin-left: 20px;
+            margin-top: 10px;
+          }
+          .div_img{
+            height: 100%;
+            padding-top: 20px;
+            padding-left: 20px;
+            display: flex;
+            color: white;
+            text-decoration: none;
+          }
+          h3{
+            color: white;
+            margin-left: 20px;
+            margin-right: 20px;
+            text-decoration: none;
+            font-weight: normal;
+          }
+          .div:hover{
+            transition: scale(1.1);
+            cursor: pointer;
+            border: 3px solid #5fa2db;
+            text-decoration: none;
+          }
+        </style>
+      </body>
 {% endblock %}

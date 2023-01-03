@@ -15,14 +15,14 @@ input[type="text"]{
      padding-left: 10px;
 }
 input[type="text"]:hover{
-    border: 2px solid #378281;
+    border: 2px solid #0082FC;
 }
 input[type="Submit"]{
      margin-left: 10px;
-     background-color: #378281;
+     background-color: #0082FC;
      width: 15%;
      text-decoration: none;
-     border: 1px solid #378281;
+     border: 1px solid #0082FC;
      border-radius: 5px;
      height: 50px;
      color: white;
@@ -30,9 +30,9 @@ input[type="Submit"]{
      padding-left: 5px;
 }
 input[type="Submit"]:hover{
-    border: 2px solid #378281;
+    border: 2px solid #0082FC;
     transform: scale(1.1);
-    background-color: #2e3047;
+    background-color: #0A192F;
     cursor: pointer;
 }
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from flask_socketio import SocketIO
 import bluetooth
 import subprocess
@@ -66,9 +66,6 @@ def scan_mac_result():
     
     return render_template('scan_mac.html', newdata = "data_str")
 
-@app.route('/scan_name')
-def scan_name():
-    return render_template('scan_name.html')
 
 
 @app.route('/ddos')
@@ -110,11 +107,18 @@ def ddos_result():
 
     return render_template('ddos.html', newdata = 'Started 700 threads, please wait a few minutes !')
 
-
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+@app.route('/parametres.jpg')
+def parametres_image():
+    return send_from_directory('static', 'parametres.png')
 
 
 if __name__ == '__main__':

@@ -93,12 +93,12 @@ body{
 
 .sidebar .menu .menu-item:hover,
 .sidebar .menu .menu-item.is-active {
-    color: #378281;
-    border-right: 5px solid #378281;
+    color: #0082FC;
+    border-right: 5px solid #0082FC;
 }
 
 .sidebar .menu .menu-item:hover {
-    border-right: 5px solid #378281;
+    border-right: 5px solid #0082FC;
 }
 
 .content {

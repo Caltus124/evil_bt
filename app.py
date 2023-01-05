@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, escape
 from flask_socketio import SocketIO
 import bluetooth
 import subprocess
 import threading
 from flask_socketio import SocketIO
+import os
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -20,27 +21,30 @@ def scan():
 
 @app.route('/scan/result',methods=['POST', 'GET'])
 def scan_result():
-    nearby_devices = bluetooth.discover_devices()
-    data_str2 = str(nearby_devices)[1:-1]
-    data_str = data_str2.replace("'", '')
-    result = "error"
-    items = []
-    
-    if data_str == '':
-        items.append("No bluetooth found !")
-    else:
+    try:
+        nearby_devices = bluetooth.discover_devices()
+        data_str2 = str(nearby_devices)[1:-1]
+        data_str = data_str2.replace("'", '')
+        result = "error"
+        items = []
         
-        # Pour chaque périphérique
-        for addr in nearby_devices:
-            # Recherche du nom du périphérique
-            device_name = bluetooth.lookup_name(addr)
-            result = f'{addr} - {device_name}'
-            items.append(result)
+        if data_str == '':
+            items.append("No bluetooth found !")
+        else:
             
-            print(result)
-
-    return render_template('scan.html', items=items)
-
+            # Pour chaque périphérique
+            for addr in nearby_devices:
+                # Recherche du nom du périphérique
+                device_name = bluetooth.lookup_name(addr)
+                result = f'{addr} - {device_name}'
+                items.append(result)
+                
+                print(result)
+        print("carte found")
+        return render_template('scan.html', items=items)
+    except:
+        print("carte not found")
+        return render_template('scan.html', items="Carte Bleutooth not found !")   
 
 @app.route('/scan_mac')
 def scan_mac():
@@ -85,6 +89,7 @@ def l2ping_thread(socketio):
 
 
 
+
 @app.route('/ddos/result',methods=['POST', 'GET'])
 def ddos_result():
     output = request.form.to_dict()
@@ -116,9 +121,22 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 
-@app.route('/parametres.jpg')
-def parametres_image():
-    return send_from_directory('static', 'parametres.png')
+@app.route('/settings/cmd_hci')
+def cmd_hci():
+    os.system('hciconfig hci0 up')
+    result = 'Bleutooth UP !'
+    return result
+
+@app.route('/settings/cmd_hci2')
+def cmd_hci2():
+    os.system('hciconfig hci0 down')
+    result = 'Bleutooth DOWN !'
+    return result
+
+@app.route('/settings/hciconfig')
+def hciconfig_name():
+    output = subprocess.check_output(['hciconfig']).decode()
+    return escape(output)
 
 
 if __name__ == '__main__':

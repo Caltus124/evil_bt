@@ -9,19 +9,40 @@
      </head>
      
      <body>
+        <h4>Your bleutooth card</h4>
+        <input class="file_submit" type="Submit" value="Activate" onclick="displayResult()" style="margin-right: 25px;">
+        <input class="file_submit" type="Submit" value="Deactivate" onclick="displayResult2()">
+        <h5 id="result"></h5>
+        <h6 id="result2"></h6>
+        <input class="file_submit" type="Submit" value="info" onclick="displayResult3()">
+        <h4 id="result3"></h4>
 
-        <dashboard class="dashboard">
-            <dashboard-header title="Datacenter">
-                <dashboard-clock digital="true" binary="true" />
-            </dashboard-header>
-            <server-list>
-                <server v-for="(server, index) in servers" :class="{ 'has-failed': !server.status }" :type="server.type" @click.native="updateServerStatus(index)">
-                    <span slot="name" class="data">CC</span>
-                    <span slot="status" class="data signal">CC</span>
-                    <span slot="adr" class="data">CC</span>
-                </server>
-            </server-list>
-        </dashboard>
+    <script>
+    function displayResult() {
+      fetch('/settings/cmd_hci')
+        .then(response => response.text())
+        .then(result => {
+          document.getElementById('result').innerHTML = result;
+        });
+        document.getElementById('result2').innerHTML = "";
+    }
+    function displayResult2() {
+      fetch('/settings/cmd_hci2')
+        .then(response => response.text())
+        .then(result => {
+          document.getElementById('result2').innerHTML = result;
+        });
+        document.getElementById('result').innerHTML = "";
+
+    }
+    function displayResult3() {
+      fetch('/settings/hciconfig')
+        .then(response => response.text())
+        .then(result => {
+          document.getElementById('result3').innerHTML = result;
+        });
+    }
+    </script>
 
      </body>
 </html>

@@ -13,13 +13,16 @@
         <form class="grid" action="/scan/result" method="POST">
           <input class="file_submit" type="Submit" value="Scan"><br><br>
         </form>
-        {% if items %}
+        {% if items != "Carte Bleutooth not found !" %}
           <ul>
             {% for item in items %}
               <li><h1 style="color: white;">{{item}}</h1></li>
             {% endfor %}
           </ul>
+        {% else %}
+          <h6>{{items}}</h6>
         {% endif %}
+
 
 
      </body>

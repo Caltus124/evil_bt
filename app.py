@@ -3,11 +3,25 @@ from flask_socketio import SocketIO
 import bluetooth
 import subprocess
 import threading
+from colorama import *
 from flask_socketio import SocketIO
 import os
 
+os.system('clear')
+
 app = Flask(__name__)
 socketio = SocketIO(app)
+
+print(Fore.CYAN+'''
+███████╗██╗   ██╗██╗██╗      ██████╗ ████████╗
+██╔════╝██║   ██║██║██║      ██╔══██╗╚══██╔══╝
+█████╗  ██║   ██║██║██║█████╗██████╔╝   ██║   
+██╔══╝  ╚██╗ ██╔╝██║██║╚════╝██╔══██╗   ██║   
+███████╗ ╚████╔╝ ██║███████╗ ██████╔╝   ██║   
+╚══════╝  ╚═══╝  ╚═╝╚══════╝ ╚═════╝    ╚═╝   
+    '''+Fore.WHITE)
+
+print('             By Caltus124\n')
 
 @app.route('/home')
 @app.route('/')
@@ -44,7 +58,7 @@ def scan_result():
         return render_template('scan.html', items=items)
     except:
         print("carte not found")
-        return render_template('scan.html', items="Carte Bleutooth not found !")   
+        return render_template('scan.html', items="Carte Bleutooth not activate !")   
 
 @app.route('/scan_mac')
 def scan_mac():
@@ -53,23 +67,15 @@ def scan_mac():
 
 @app.route('/scan_mac/result',methods=['POST', 'GET'])
 def scan_mac_result():
-    output = request.form.to_dict()
+    try:
+        output = request.form.to_dict()
 
-    target_url = output["target_mac"]
-    device_name = bluetooth.lookup_name(target_url)
-    services = bluetooth.find_service(address=target_url)
-    if services:
-        print(device_name)
-        # Pour chaque service disponible, affichage de son nom et de son UUID
-        for service in services:
-            print(f'  Service: {service["name"]} [{service["protocol"]}]')
-            print(f'  UUID: {service["service-id"]}')
-    else:
-        print('Aucun service disponible sur ce périphérique')
+        target_url = output["target_mac"]
+        services = bluetooth.find_service(address=target_url)
 
-    
-    return render_template('scan_mac.html', newdata = "data_str")
-
+        return render_template('scan_mac.html', services = services)
+    except:
+        return render_template('scan_mac.html', services = "MAC Adresse not found !")
 
 
 @app.route('/ddos')

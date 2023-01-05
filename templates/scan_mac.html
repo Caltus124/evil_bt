@@ -14,9 +14,16 @@
           <input class="file_submit" type="text" placeholder="Enter a valid mac address !" id="target_mac" name="target_mac">
           <input class="file_submit" type="Submit" value="Scan"><br><br>
         </form>
-        {% if newdata %}
-          <h1 style="color: white;">{{newdata}}</h1>
-        {% endif %}
+
+        <ul>
+          {% for service in services %}
+            <li style="list-style-type: none;"><h7>Nom : {{ service.name }}</h7></li>
+            <li style="list-style-type: none;"><h7>Port : {{ service.port }}</h7></li>
+            <li style="list-style-type: none;"><h7>Protocole : {{ service.protocol }}</h7></li><br>
+          {% endfor %}
+        </ul>
+
+
 
      </body>
 </html>

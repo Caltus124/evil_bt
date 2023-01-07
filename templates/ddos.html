@@ -11,10 +11,12 @@
      <body>
 
         <form class="grid" action="/ddos/result" method="POST">
+          <input class="file_submit" type="number" name="packet_size" id="packet_size" placeholder="Packet size" max="600"><br><br><br>
+          <input class="file_submit" type="number" name="threads_size" id="threads_size" placeholder="Threads size"><br><br><br>
           <input class="file_submit" type="text" name="target_mac" id="target_mac" placeholder="Enter a valid mac address !">
           <input class="file_submit" type="Submit" value="Scan"><br><br>
         </form>
-
+        
         {% if newdata %}
           <h1 style="color: white;">{{newdata}}</h1>
         {% endif %}

